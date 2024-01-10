@@ -25,8 +25,8 @@ builder.Services.AddQuartz(q =>
     q.AddTrigger(opts => opts
         .ForJob(jobKey)
         .WithIdentity(jobKey.Name + "-trigger")
-        //This Cron interval can be described as "run yevery minute" (when second is zero)
-        .WithCronSchedule(CronScheduleBuilder.CronSchedule("* * * * *")));
+        //This Cron interval can be described as "run every minute" (when second is zero)
+        .WithCronSchedule(CronScheduleBuilder.CronSchedule("0 0/1 * 1/1 * ? *")));
     
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
