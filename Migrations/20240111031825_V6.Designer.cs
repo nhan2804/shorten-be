@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationX.Data;
 
@@ -10,9 +11,11 @@ using WebApplicationX.Data;
 namespace WebApplicationX.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240111031825_V6")]
+    partial class V6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,14 +28,11 @@ namespace WebApplicationX.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<int?>("ShortenId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("asn")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("city")
                         .HasColumnType("text");
@@ -40,8 +40,26 @@ namespace WebApplicationX.Migrations
                     b.Property<string>("continent")
                         .HasColumnType("text");
 
+                    b.Property<string>("continent_code")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("country")
                         .HasColumnType("text");
+
+                    b.Property<string>("country_capital")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("country_code")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("country_flag")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("country_neighbours")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("country_phone")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("currency")
                         .HasColumnType("text");
@@ -49,17 +67,53 @@ namespace WebApplicationX.Migrations
                     b.Property<string>("currency_code")
                         .HasColumnType("text");
 
+                    b.Property<string>("currency_plural")
+                        .HasColumnType("longtext");
+
+                    b.Property<double?>("currency_rates")
+                        .HasColumnType("double");
+
+                    b.Property<string>("currency_symbol")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ip")
                         .HasColumnType("text");
 
                     b.Property<string>("isp")
                         .HasColumnType("text");
 
+                    b.Property<double>("latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("longitude")
+                        .HasColumnType("double");
+
                     b.Property<string>("org")
                         .HasColumnType("text");
 
                     b.Property<string>("region")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("success")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("timezone")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("timezone_dstOffset")
+                        .HasColumnType("int");
+
+                    b.Property<string>("timezone_gmt")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("timezone_gmtOffset")
+                        .HasColumnType("int");
+
+                    b.Property<string>("timezone_name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("type")
+                        .HasColumnType("longtext");
 
                     b.HasKey("IdInfo");
 

@@ -9,14 +9,13 @@ using WebApplicationX.Models;
 
 namespace WebApplicationX.Controllers
 {
-    [ApiController]
-    [Route("api/shortens")]
-    public class ShortenLinkController : ControllerBase
+    [Route("api/info")]
+    public class InfoIPController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ShortenLinkController> _logger;
 
-        public ShortenLinkController(ILogger<ShortenLinkController> logger, ApplicationDbContext context)
+        public InfoIPController(ILogger<ShortenLinkController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -57,12 +56,6 @@ namespace WebApplicationX.Controllers
         [HttpPost("")]
         public async Task<ActionResult<Shorten>> Create([FromBody] Shorten shorten)
         {
-
-            var entity = await _context.Shortens.FirstOrDefaultAsync(s => s.CodeLink == shorten.CodeLink);
-            if (entity is not null)
-            {
-                return BadRequest("Code is exist, please enter other code!");
-            }
             _context.Shortens.Add(shorten);
             await _context.SaveChangesAsync();
 
@@ -80,27 +73,6 @@ namespace WebApplicationX.Controllers
        
             _logger.LogInformation(infoIp.country);
             return NoContent();
-        }
-        [HttpGet("analysis/{id}")]
-        public async Task<IActionResult> Analysis(int id, long startDate, long endDate)
-        {
-
-            var query = _context.InfoIps.Where(s => s.ShortenId == id);
-
-            if (startDate > 0 && endDate > 0) // Ensure timestamps are valid
-            {
-                _logger.LogInformation(startDate.ToString());
-                _logger.LogInformation(endDate.ToString());
-                // Convert timestamps to DateTime
-                DateTime startDateUtc = DateTimeOffset.FromUnixTimeMilliseconds(startDate).Date;
-                DateTime endDateUtc = DateTimeOffset.FromUnixTimeMilliseconds(endDate).Date;
-
-
-                query = query.Where(s => s.CreatedAt >= startDateUtc && s.CreatedAt <= endDateUtc);
-            }
-
-            var entities = await query.ToListAsync();
-            return Ok(entities);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Shorten shorten)

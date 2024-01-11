@@ -8,5 +8,6 @@ namespace WebApplicationX.Data
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Shorten> Shortens { get; set; }
+        public DbSet<InfoIP> InfoIps { get; set; }
     }
 }
