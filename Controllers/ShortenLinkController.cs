@@ -71,12 +71,19 @@ namespace WebApplicationX.Controllers
         [HttpPost("collect/{id}")]
         public async Task<IActionResult> Collect(int id, [FromBody] InfoIP infoIp)
         {
+             var entity = await _context.Shortens.FindAsync(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
             infoIp.ShortenId = id;
             infoIp.CreatedAt = DateTime.Now;
             infoIp.UpdatedAt = DateTime.Now;
             _context.InfoIps.Add(infoIp);
+            entity.CountAccess++;
             await _context.SaveChangesAsync();
-
+            
        
             _logger.LogInformation(infoIp.country);
             return NoContent();

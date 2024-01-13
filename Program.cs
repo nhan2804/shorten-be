@@ -16,11 +16,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = "localhost";
-    options.InstanceName = "localhost1";
-});
+//builder.Services.AddStackExchangeRedisCache(options =>
+//{
+//    options.Configuration = "localhost";
+//    options.InstanceName = "localhost1";
+//});
 builder.Services.AddQuartz(q =>
 {
     // Just use the name of your job that you created in the Jobs folder.
@@ -35,17 +35,6 @@ builder.Services.AddQuartz(q =>
     
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
-
-//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: MyAllowSpecificOrigins,
-//                      policy =>
-//                      {
-//                          policy.WithOrigins("http://localhost:5173");
-//                      });
-//});
 
 var app = builder.Build();
 app.UseCors(builder => builder

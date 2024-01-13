@@ -24,7 +24,7 @@ namespace WebApplicationX.Controllers
         [HttpGet("")]
         public async Task<ActionResult<IEnumerable<Shorten>>> Get()
         {
-            var entities = await _context.Shortens.ToListAsync();
+            var entities = await _context.InfoIps.ToListAsync();
             return Ok(entities);
         }
 
@@ -64,15 +64,25 @@ namespace WebApplicationX.Controllers
         [HttpPost("collect/{id}")]
         public async Task<IActionResult> Collect(int id, [FromBody] InfoIP infoIp)
         {
+            var entity = await _context.Shortens.FindAsync(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
             infoIp.ShortenId = id;
             infoIp.CreatedAt = DateTime.Now;
             infoIp.UpdatedAt = DateTime.Now;
             _context.InfoIps.Add(infoIp);
+            entity.CountAccess++;
+            
             await _context.SaveChangesAsync();
 
        
-            _logger.LogInformation(infoIp.country);
-            return NoContent();
+            _logger.LogInformation("la gif day "
+                + entity.CountAccess.ToString());
+            return Ok(entity);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Shorten shorten)

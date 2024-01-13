@@ -47,8 +47,6 @@ namespace WebApplicationX.Jobs
                     }
                 }
             }
-
-            // You can return a Task.FromResult(true), but it's not necessary for a void method.
         }
     }
 }
